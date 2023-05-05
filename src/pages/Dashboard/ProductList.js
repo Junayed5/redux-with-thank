@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadProductData } from "../../redux/thunk/products/loadProducts";
+import removeProductData from "../../redux/thunk/products/removeProduct";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
 
+  const dispatch = useDispatch();
+  const products = useSelector(state => state.product.products)
+  // useEffect(() => {
+  //   fetch("products.json")
+  //     .then((res) => res.json())
+  //     .then((data) => setProducts(data));
+  // });
   useEffect(() => {
-    fetch("products.json")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+    dispatch(loadProductData())
   });
 
   return (
@@ -67,7 +74,7 @@ const ProductList = () => {
                   </td>
                   <td class='p-2'>
                     <div class='flex justify-center'>
-                      <button>
+                      <button onClick={() => dispatch(removeProductData(_id))}>
                         <svg
                           class='w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1'
                           fill='none'
