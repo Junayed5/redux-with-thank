@@ -3,13 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import loadSingleData from '../../redux/thunk/products/loadSingleProduct';
+import updateProductData from '../../redux/thunk/products/updateProduct';
 
 const UpdateProduct = () => {
 
     const { register, handleSubmit } = useForm();
     const dispatch = useDispatch();
     const {id} = useParams();
-    console.log(id);
+    // console.log(id);
     const product = useSelector(state => state.product.product);
     console.log(product);
 
@@ -34,6 +35,7 @@ const UpdateProduct = () => {
 
         console.log(product);
         // dispatch(addProductData(product))
+        dispatch(updateProductData(id, product))
     };
 
     return (
@@ -46,29 +48,29 @@ const UpdateProduct = () => {
                     <label className='mb-2' htmlFor='model'>
                         Model
                     </label>
-                    <input  type='text' id='model' {...register("model")} />
+                    <input type='text' name='model' id='model' value={product && product.model}  {...register("model")} />
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-2' htmlFor='image'>
                         Image
                     </label>
-                    <input type='text' name='image' id='image' {...register("image")} />
+                    <input type='text' name='image' id='image' value={product && product.image} {...register("image")} />
                 </div>
 
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-3' htmlFor='brand'>
                         Brand
                     </label>
-                    <select name='brand' id='brand' {...register("brand")}>
+                    <select name='brand' id='brand' value={product && product.brand} {...register("brand")}>
                         <option value='amd'>AMD</option>
                         <option value='intel'>Intel</option>
                     </select>
                 </div>
                 <div className='flex flex-col w-full max-w-xs'>
                     <label className='mb-2' htmlFor='price'>
-                        Image
+                        Price
                     </label>
-                    <input type='text' name='price' id='price' {...register("price")} />
+                    <input type='text' name='price' id='price' value={product && product.price} {...register("price")} />
                 </div>
 
                 <div className='flex flex-col w-full max-w-xs'>
@@ -108,6 +110,7 @@ const UpdateProduct = () => {
                         type='text'
                         name='keyFeature1'
                         id='keyFeature1'
+                        value={product && product.keyFeature[0]}
                         {...register("keyFeature1")}
                     />
                 </div>
@@ -119,6 +122,7 @@ const UpdateProduct = () => {
                         type='text'
                         name='keyFeature2'
                         id='keyFeature2'
+                        value={product && product.keyFeature[1]}
                         {...register("keyFeature2")}
                     />
                 </div>
@@ -130,6 +134,7 @@ const UpdateProduct = () => {
                         type='text'
                         name='keyFeature3'
                         id='keyFeature3'
+                        value={product && product.keyFeature[2]}
                         {...register("keyFeature3")}
                     />
                 </div>
@@ -141,10 +146,10 @@ const UpdateProduct = () => {
                         type='text'
                         name='keyFeature4'
                         id='keyFeature4'
+                        value={product && product.keyFeature[0]}
                         {...register("keyFeature4")}
                     />
                 </div>
-
                 <div className='flex justify-between items-center w-full'>
                     <button
                         className=' px-4 py-3 bg-indigo-500 rounded-md font-semibold text-white text-lg disabled:bg-gray-500'
